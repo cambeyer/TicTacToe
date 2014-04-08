@@ -10,8 +10,6 @@ using namespace std;
 string player1 = "X";
 string player2 = "Y";
 
-//fuck you
-
 Board::Board(int size)
 {
 	boardSize = size;
