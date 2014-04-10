@@ -111,6 +111,8 @@ void Board::buildAllTwoPointPairs()
 				{
 					if (x == a && y == b)
 						continue;
+					if (sqrt((a - x)*(a - x) + (b - y)*(b - y)) >= 2)	//if points are more than 2 spaces from each other, they are surely duplicates
+						continue;
 					thePoint one = *(new thePoint);
 					one.X = x;
 					one.Y = y;
@@ -128,6 +130,7 @@ void Board::removeDuplicatePairs()
 {
 	for (int i = 0; i < pairs.size(); i++)
 		for (int j = i + 1; j < pairs.size(); j++)
+		{
 			if ((pairs[i].one.X == pairs[j].one.X && pairs[i].one.Y == pairs[j].one.Y && pairs[i].two.X == pairs[j].two.X && pairs[i].two.Y == pairs[j].two.Y)
 				|| (pairs[i].one.X == pairs[j].two.X && pairs[i].one.Y == pairs[j].two.Y && pairs[i].two.X == pairs[j].one.X && pairs[i].two.Y == pairs[j].one.Y)
 				|| (areOnSameLine(pairs[i].one, pairs[i].two, pairs[j].one) && areOnSameLine(pairs[i].one, pairs[i].two, pairs[j].two)))
@@ -136,6 +139,7 @@ void Board::removeDuplicatePairs()
 				j--;
 				continue;
 			}
+		}
 }
 
 bool Board::areOnSameLine(thePoint one, thePoint two, thePoint three)
