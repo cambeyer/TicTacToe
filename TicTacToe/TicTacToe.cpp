@@ -17,12 +17,13 @@ Board chooseBoard()
 {
 	int size = 0;
 	string sizeInput = "";
-	while (size <= 0)
+	while (size <= 2 || size > 10)
 	{
-		cout << "Please enter the desired size of the board: ";
+		cout << "Please enter the desired size of the board (min 2, max 10): ";
 		cin >> sizeInput;
 		size = atoi(sizeInput.c_str());
 	}
+	cout << endl << "Please wait; generating board!" << endl;
 	Board theBoard(size);
 	return theBoard;
 }
