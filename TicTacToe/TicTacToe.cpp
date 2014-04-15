@@ -86,7 +86,7 @@ bool playGame(Board theBoard)
 	string playAgain = "";
 	while (playAgain != "y" && playAgain != "Y" && playAgain != "n" && playAgain != "N")
 	{
-		cout << "Play again? (y/n): " << endl;
+		cout << "Play again? (y/n): ";
 		cin >> playAgain;
 		if (playAgain == "y" || playAgain == "Y")
 		{
