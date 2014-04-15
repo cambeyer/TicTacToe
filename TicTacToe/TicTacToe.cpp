@@ -62,16 +62,26 @@ bool playGame(Board theBoard)
 			theMove = atoi(move.c_str());
 		}
 		if (theMove == 0)
+		{
 			theBoard.makeMove(player, theBoard.bestMove(player));
+		}
 		else
+		{
 			theBoard.makeMove(player, theMove);
+		}
 		theBoard.displayBoard();
 		if (checkWin(player, theBoard))
+		{
 			break;
+		}
 		if (player == 1)
+		{
 			player = 2;
+		}
 		else
+		{
 			player = 1;
+		}
 	}
 	cout << "Play again?" << endl;
 	return false;
