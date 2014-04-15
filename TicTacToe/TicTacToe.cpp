@@ -83,7 +83,16 @@ bool playGame(Board theBoard)
 			player = 1;
 		}
 	}
-	cout << "Play again?" << endl;
+	string playAgain = "";
+	while (playAgain != "y" && playAgain != "Y" && playAgain != "n" && playAgain != "N")
+	{
+		cout << "Play again? (y/n): " << endl;
+		cin >> playAgain;
+		if (playAgain == "y" || playAgain == "Y")
+		{
+			return true;
+		}
+	}
 	return false;
 }
 
