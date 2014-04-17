@@ -8,7 +8,7 @@
 using namespace std;
 
 string player1 = "X";
-string player2 = "Y";
+string player2 = "O";
 
 
 //another comment
