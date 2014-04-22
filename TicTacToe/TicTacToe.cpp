@@ -38,7 +38,6 @@ bool checkWin(int player, Board theBoard)
 	}
 	else
 	{
-		cout << "Player " << player << " has not won." << endl;
 		return false;
 	}
 }
