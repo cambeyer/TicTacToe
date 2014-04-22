@@ -33,7 +33,6 @@ bool checkWin(int player, Board theBoard)
 	if (theBoard.checkIfWin(player))
 	{
 		cout << "Player " << player << " wins!!!" << endl;
-		system("pause");
 		return true;
 	}
 	else
@@ -44,14 +43,13 @@ bool checkWin(int player, Board theBoard)
 
 bool playGame(Board theBoard)
 {
-	theBoard.displayColinears(); //debug line; shows all possible win paths
+	//theBoard.displayColinears(); //debug line; shows all possible win paths
 	system("cls");
 
-	/* ABOUT TO SIMULTATE PLAYER 1 CHOOSING POSITIONS 1, 2, AND 3! TO SEE OUTPUT, SET BOARD SIZE TO 3 WHEN PROMPTED */
 	int player = 1;
+	theBoard.displayBoard();
 	while (!checkWin(player, theBoard))
 	{
-		theBoard.displayBoard();
 		string move = "";
 		int theMove = -1;
 		while (theMove < 0)
@@ -85,7 +83,7 @@ bool playGame(Board theBoard)
 	string playAgain = "";
 	while (playAgain != "y" && playAgain != "Y" && playAgain != "n" && playAgain != "N")
 	{
-		cout << "Play again? (y/n): ";
+		cout << "Game over; play again? (y/n): ";
 		cin >> playAgain;
 		if (playAgain == "y" || playAgain == "Y")
 		{
