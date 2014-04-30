@@ -10,7 +10,7 @@ using namespace std;
 string player1 = "X";
 string player2 = "O";
 
-Board::Board(int size)													//constructor
+Board::Board(int size)															//constructor
 {
 	boardSize = size;
 	blankBoard();
@@ -352,22 +352,6 @@ bool Board::checkIfTie()														//if all winning pathways are a mix of bot
 		}
 	}
 	return true;																//if all else fails, it must be a tie game
-}
-
-int Board::movesRemaining()														//how many openings are left on the board to make moves in?
-{
-	int counter = 0;
-	for (int i = 0; i < spaces.size(); i++)
-	{
-		for (int j = 0; j < spaces[i].size(); j++)
-		{
-			if (spaces[i][j] > 0)
-			{
-				counter++;														//anything greater than zero is still open
-			}
-		}
-	}
-	return counter;																//return the count
 }
 
 int Board::bestMove(int player)													//hidden feature that helps determine the best aggressive move (no defense capabilities)
