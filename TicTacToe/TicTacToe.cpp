@@ -57,6 +57,10 @@ bool checkWin(int player, Board theBoard)
 		cout << "Cats Game (Players have tied).";
 		return true; 
 	}
+	else
+	{
+		return false;
+	}
 }
 
 //Function to play the game.
