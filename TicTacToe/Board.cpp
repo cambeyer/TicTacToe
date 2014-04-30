@@ -204,22 +204,22 @@ bool Board::areOnSameLine(thePoint one, thePoint two, thePoint three)			//determ
 
 void Board::findColinears()														//for each pair, and all remaining points, figure out which spaces are on the same line as each pair of points
 {
-	for (int i = 0; i < pairs.size(); i++)
+	for (int i = 0; i < pairs.size(); i++)										//for all pairs...
 	{
-		for (int c = 0; c < spaces.size(); c++)
+		for (int c = 0; c < spaces.size(); c++)									//go through all Xs...
 		{
-			for (int d = 0; d < spaces[c].size(); d++)
+			for (int d = 0; d < spaces[c].size(); d++)							//... and Ys on the board
 			{
 				if ((pairs[i].one.X == c && pairs[i].one.Y == d) || (pairs[i].two.X == c && pairs[i].two.Y == d))
 				{
-					continue;
+					continue;													//if the point is already in the pair, we don't want it listed as a colinear
 				}
 				thePoint three = *(new thePoint);
 				three.X = c;
 				three.Y = d;
 				if (areOnSameLine(pairs[i].one, pairs[i].two, three))
 				{
-					pairs[i].colinears.push_back(three);
+					pairs[i].colinears.push_back(three);						//if it is in line with the existing point pair, then it's colinear
 				}
 			}
 		}
@@ -232,14 +232,14 @@ void Board::removeBlankPaths()
 	{
 		if (pairs[i].colinears.size() < boardSize - 2)
 		{
-			pairs.erase(pairs.begin() + i);
+			pairs.erase(pairs.begin() + i);										//if a list of colinears never developed for a point pair, it's not a valid winning pathway
 			i--;
 			continue;
 		}
 	}
 }
 
-void Board::displayColinears()
+void Board::displayColinears()													//diagnostic function to output all winning pathways
 {
 	cout << endl << "DIAGNOSTIC: ALL WINNING COMBINATIONS" << endl << endl;
 	for (int i = 0; i < pairs.size(); i++)
@@ -257,7 +257,7 @@ void Board::displayColinears()
 		int j;
 		for (j = 0; j < pairs[i].colinears.size() - 1; j++)
 		{
-			cout << "(" << pairs[i].colinears[j].X << "," << pairs[i].colinears[j].Y << "),";
+			cout << "(" << pairs[i].colinears[j].X << "," << pairs[i].colinears[j].Y << "),";		//print out all the point pairs and all their colinears, one point pair per line
 		}
 		cout << "(" << pairs[i].colinears[j].X << "," << pairs[i].colinears[j].Y << ")" << endl;
 	}
@@ -265,7 +265,7 @@ void Board::displayColinears()
 	system("pause");
 }
 
-bool Board::makeMove(int player, int space)
+bool Board::makeMove(int player, int space)										//commit a move to a space in the board with that number
 {
 	for (int i = 0; i < spaces.size(); i++)
 	{
@@ -273,42 +273,42 @@ bool Board::makeMove(int player, int space)
 		{
 			if (spaces[i][j] == space)
 			{
-				spaces[i][j] = -player;
-				return true;
+				spaces[i][j] = -player;											//replace the space in the board with the negative player number to keep track of who has what
+				return true;													//the move was successful
 			}
 		}
 	}
-	return false;
+	return false;																//if no such number exists in the board, then the move is not valid
 }
 
-bool Board::checkIfWin(int player)
+bool Board::checkIfWin(int player)												//if one player has all of the points represented by a point pair and all its colinears, they have won
 {
 	for (int i = 0; i < pairs.size(); i++)
 	{
-		if (spaces[pairs[i].one.X][pairs[i].one.Y] == -player && spaces[pairs[i].two.X][pairs[i].two.Y] == -player)
+		if (spaces[pairs[i].one.X][pairs[i].one.Y] == -player && spaces[pairs[i].two.X][pairs[i].two.Y] == -player)	//check the point pair points individually
 		{
 			if (pairs[i].colinears.empty())
 			{
 				return true;
 			}
 			bool win = true;
-			for (int j = 0; j < pairs[i].colinears.size(); j++)
+			for (int j = 0; j < pairs[i].colinears.size(); j++)					//then check all the colinears
 			{
 				if (spaces[pairs[i].colinears[j].X][pairs[i].colinears[j].Y] != -player)
 				{
-					win = false;
+					win = false;												//if anything isn't the player's, then they haven't won
 				}
 			}
 			if (win)
 			{
-				return true;
+				return true;													//all things in an entire point pair are taken by one player
 			}
 		}
 	}
 	return false;
 }
 
-int Board::movesRemaining()
+int Board::movesRemaining()														//how many openings are left on the board to make moves in?
 {
 	int counter = 0;
 	for (int i = 0; i < spaces.size(); i++)
@@ -317,21 +317,21 @@ int Board::movesRemaining()
 		{
 			if (spaces[i][j] > 0)
 			{
-				counter++;
+				counter++;														//anything greater than zero is still open
 			}
 		}
 	}
-	return counter;
+	return counter;																//return the count
 }
 
-int Board::bestMove(int player)
+int Board::bestMove(int player)													//hidden feature that helps determine the best aggressive move (no defense capabilities)
 {
-	vector< vector<int> > spacesCount = spaces;
+	vector< vector<int> > spacesCount = spaces;									//each space will have a count of how many winning pathways it is a part of
 	for (int i = 0; i < spacesCount.size(); i++)
 	{
 		for (int j = 0; j < spacesCount[i].size(); j++)
 		{
-			spacesCount[i][j] = 0;
+			spacesCount[i][j] = 0;												//initialize all spaces counts to zero
 		}
 	}
 
@@ -341,8 +341,8 @@ int Board::bestMove(int player)
 	{
 		int otherPlayer = 0;
 		int count = 0;
-		spacesCount[pairs[i].one.X][pairs[i].one.Y]++;
-		spacesCount[pairs[i].two.X][pairs[i].two.Y]++;
+		spacesCount[pairs[i].one.X][pairs[i].one.Y]++;							//increment the counter for the first point in the pair
+		spacesCount[pairs[i].two.X][pairs[i].two.Y]++;							//increment the counter for the second point in the pair
 		if (spaces[pairs[i].one.X][pairs[i].one.Y] == -player)
 		{
 			count++;
@@ -363,7 +363,7 @@ int Board::bestMove(int player)
 		{
 			for (int j = 0; j < pairs[i].colinears.size(); j++)
 			{
-				spacesCount[pairs[i].colinears[j].X][pairs[i].colinears[j].Y]++;
+				spacesCount[pairs[i].colinears[j].X][pairs[i].colinears[j].Y]++;	//increment the counter for all the colinears
 				if (spaces[pairs[i].colinears[j].X][pairs[i].colinears[j].Y] == -player)
 				{
 					count++;
@@ -380,14 +380,9 @@ int Board::bestMove(int player)
 			biggestCount = count;
 		}
 	}
-	//for (int i = 0; i < spacesCount.size(); i++)
-	//{
-	//	for (int j = 0; j < spacesCount[i].size(); j++)
-	//		cout << spacesCount[i][j] << " ";
-	//	cout << endl;
-	//}
 	int move = 0;
 	int bestCount = 0;
+	//go through all point pairs and colinears to find the one that is referenced the most and use that move
 	if (spaces[pairs[biggestIndex].one.X][pairs[biggestIndex].one.Y] > 0 && spacesCount[pairs[biggestIndex].one.X][pairs[biggestIndex].one.Y] > bestCount)
 	{
 		move = spaces[pairs[biggestIndex].one.X][pairs[biggestIndex].one.Y];
