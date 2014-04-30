@@ -103,7 +103,7 @@ bool playGame(Board theBoard)
 			player = 1;
 		}
 	}
-	string playAgain = "";
+	string playAgain = "";	//For when the user is asked if they want to play again.
 	while (playAgain != "y" && playAgain != "Y" && playAgain != "n" && playAgain != "N")
 	{
 		cout << "Game over; play again? (y/n): ";
@@ -118,6 +118,7 @@ bool playGame(Board theBoard)
 
 int main()
 {
+	//The pipeling for the entire game (calls to functions in the proper order).
 	displayWelcome();
 	bool play = true;
 	Board theBoard;
