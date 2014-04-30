@@ -308,6 +308,52 @@ bool Board::checkIfWin(int player)												//if one player has all of the poi
 	return false;
 }
 
+bool Board::checkIfTie()														//if all winning pathways are a mix of both players, the game cannot be won
+{
+	for (int i = 0; i < pairs.size(); i++)
+	{
+		int tempPlayer = 0;
+		if (spaces[pairs[i].one.X][pairs[i].one.Y] < 0 && spaces[pairs[i].two.X][pairs[i].two.Y] < 0 && spaces[pairs[i].one.X][pairs[i].one.Y] != spaces[pairs[i].two.X][pairs[i].two.Y])	//if both spaces are occupied, and occupied by different players
+		{
+			continue;															//this pathway cannot be won
+		}
+		if (pairs[i].colinears.empty())
+		{
+			return false;														//if there aren't any colinears to worry about, and the check above didn't fail, then there is at least one good path left 
+		}
+		if (spaces[pairs[i].one.X][pairs[i].one.Y] < 0)							//if the first point of the point pair is occupied, preliminarily compare off that
+		{
+			tempPlayer = spaces[pairs[i].one.X][pairs[i].one.Y];
+		}
+		if (spaces[pairs[i].two.X][pairs[i].two.Y] < 0)							//if the second point of the point pair is occupied, preliminarily compare off that
+		{
+			tempPlayer = spaces[pairs[i].two.X][pairs[i].two.Y];
+		}
+		bool doContinue = false;
+		for (int j = 0; j < pairs[i].colinears.size(); j++)						//then check all the colinears
+		{
+			if (spaces[pairs[i].colinears[j].X][pairs[i].colinears[j].Y] < 0 && tempPlayer == 0)	//if the preliminary compare wasn't set and this colinear is occupied, compare off that
+			{
+				tempPlayer = spaces[pairs[i].colinears[j].X][pairs[i].colinears[j].Y];
+			}
+			if (spaces[pairs[i].colinears[j].X][pairs[i].colinears[j].Y] < 0 && spaces[pairs[i].colinears[j].X][pairs[i].colinears[j].Y] != tempPlayer)	//if the colinear is occupied and is different than something already in the row, the pathway is unwinnable
+			{
+				doContinue = true;
+				break;
+			}
+		}
+		if (doContinue)
+		{
+			continue;															//added handler because of the nested for loop
+		}
+		else
+		{
+			return false;														//there is at least one complete path without conflicting players present
+		}
+	}
+	return true;																//if all else fails, it must be a tie game
+}
+
 int Board::movesRemaining()														//how many openings are left on the board to make moves in?
 {
 	int counter = 0;

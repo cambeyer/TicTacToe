@@ -52,9 +52,9 @@ bool checkWin(int player, Board theBoard)
 		cout << "Player " << player << " wins!!!" << endl;
 		return true;
 	}
-	else if (theBoard.movesRemaining() == 0)
+	else if (theBoard.checkIfTie())
 	{
-		cout << "Cats Game (Players have tied)." << endl;
+		cout << "Cat's Game (Players have tied)!" << endl;
 		return true; 
 	}
 	else

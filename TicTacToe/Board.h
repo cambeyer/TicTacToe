@@ -32,6 +32,7 @@ public:
    void displayColinears();
    bool makeMove(int, int);
    bool checkIfWin(int);
+   bool checkIfTie();
    int movesRemaining();
    int bestMove(int);
 private:
