@@ -32,6 +32,7 @@ public:
    void displayColinears();
    bool makeMove(int, int);
    bool checkIfWin(int);
+   int movesRemaining();
    int bestMove(int);
 private:
    int boardSize;
