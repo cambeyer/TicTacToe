@@ -73,32 +73,18 @@ bool playGame(Board theBoard)
 	theBoard.displayBoard();
 	while (!checkWin(player, theBoard))
 	{
-		string move = "";
-		int theMove = -1;
-		while (theMove < 0)
+		bool moveOn = false;
+		while (!moveOn)
 		{
-			cout << "Player " << player << ", please make a move (0 for auto-select): ";
-			cin >> move;
-			theMove = atoi(move.c_str());
-		}
-		if (theMove == 0)
-		{
-			theBoard.makeMove(player, theBoard.bestMove(player));
-		}
-		else
-		{
-			while (!theBoard.makeMove(player, theMove))
+			string move = "";
+			int theMove = -1;
+			while (theMove < 0)
 			{
-				cout << "Invalid Move!  Make another move!" << endl << endl;
-				move = "";
-				theMove = -1;
-				while (theMove < 0)
-				{
-					cout << "Player " << player << ", please make a move: ";
-					cin >> move;
-					theMove = atoi(move.c_str());
-				}
+				cout << "Player " << player << ", please make a move: ";
+				cin >> move;
+				theMove = atoi(move.c_str());
 			}
+			moveOn = theBoard.makeMove(player, theMove);
 		}
 		theBoard.displayBoard();
 		if (checkWin(player, theBoard))

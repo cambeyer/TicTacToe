@@ -33,7 +33,6 @@ public:
    bool makeMove(int, int);
    bool checkIfWin(int);
    bool checkIfTie();
-   int bestMove(int);
 private:
    int boardSize;
    vector< vector<int> > spaces;
