@@ -77,7 +77,7 @@ bool playGame(Board theBoard)
 		int theMove = -1;
 		while (theMove < 0)
 		{
-			cout << "Player " << player << ", please make a move: ";
+			cout << "Player " << player << ", please make a move (0 for auto-select): ";
 			cin >> move;
 			theMove = atoi(move.c_str());
 		}
@@ -87,7 +87,18 @@ bool playGame(Board theBoard)
 		}
 		else
 		{
-			theBoard.makeMove(player, theMove);
+			while (!theBoard.makeMove(player, theMove))
+			{
+				cout << "Invalid Move!  Make another move!" << endl << endl;
+				move = "";
+				theMove = -1;
+				while (theMove < 0)
+				{
+					cout << "Player " << player << ", please make a move: ";
+					cin >> move;
+					theMove = atoi(move.c_str());
+				}
+			}
 		}
 		theBoard.displayBoard();
 		if (checkWin(player, theBoard))
